@@ -1,5 +1,3 @@
-# social-network-api-using-mdb
-
 # Social Network API Using MongoDB <a id="title"></a> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <a id="license-badge"></a>
 
 ## Description <a id="description"></a>
