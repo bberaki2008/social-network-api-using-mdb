@@ -35,4 +35,61 @@ module.exports = {
       .then(() => res.json({ message: 'User and associated apps deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
+
+   //Update user
+   updateUser(req, res){
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+
+    // Add a Friend
+ addFriend(req, res) {
+    User.create(req.body)
+      .then((user) => {
+        return User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { friends: user._id } },
+          { new: true }
+        );
+      })
+      .then((user) =>
+        !user
+          ? res.status(404).json({
+              message: 'friend created, but found no user with that ID',
+            })
+          : res.json({message: 'Created friend 🎉'})
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+    // Remove friend
+  removeFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.friendId },
+      { $pull: { friends: req.params.friendId} },
+      { runValidators: true, new: true }
+    )
+      .then((friend) =>
+        !friend
+          ? res.status(404).json({ message: 'No friend with this id!' })
+          : res.json(friend)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
+
+

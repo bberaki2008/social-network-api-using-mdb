@@ -14,11 +14,7 @@ const thoughtSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    // Use a getter method to format the timestamp on query
-//  function createdAt (val) {
-//   if (!val) return val;
-//   return (val.getMonth() + 1) + "/" + val.getDate() + "/" + val.getFullYear();
-// }
+
     username: {
       type:String,
       required: true,
@@ -27,8 +23,8 @@ const thoughtSchema = new Schema(
   },
   {
     toJSON: {
-      virtuals: true, //check
-      getters: true, //check
+      virtuals: true, 
+      getters: true, 
     },
     id: false,
   }
@@ -38,6 +34,12 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
 });
+
+thoughtSchema.virtual('formatedDate').get(function(){
+  if (!this.createdAt) return this.createdAt;
+  return (this.createdAt.getMonth() + 1) + "/" + this.createdAt.getDate() + "/" + this.createdAt.getFullYear();
+
+})
 
 // Initialize our Thought model
 const Thought = model('thought', thoughtSchema);

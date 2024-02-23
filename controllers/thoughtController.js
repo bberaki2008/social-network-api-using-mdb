@@ -34,7 +34,7 @@ module.exports = {
           ? res.status(404).json({
               message: 'Thought created, but found no user with that ID',
             })
-          : res.json('Created the thought 🎉')
+          : res.json({message: 'Created the thought 🎉'})
       )
       .catch((err) => {
         console.log(err);
@@ -58,8 +58,8 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  // Deletes an thought from the database. Looks for an thought by ID.
-  // Then if the thought exists, we look for any users associated with the thought based on he thought ID and update the thoughts array for the User.
+  // Deletes a thought from the database. Looks for a thought by ID.
+  // Then if the thought exists, we look for any users associated with the thought based on the thought ID and update the thoughts array for the User.
   deleteThought(req, res) {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
@@ -74,14 +74,14 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Thought created but no user with this id!',
+              message: 'Thought deleted but no user with this id!',
             })
           : res.json({ message: 'Thought successfully deleted!' })
       )
       .catch((err) => res.status(500).json(err));
   },
   // Adds a reaction to an thought. This method is unique in that we add the entire body of the reaction rather than the ID with the mongodb $addToSet operator.
-  addReaction(req, res) {
+  addThoughtReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
@@ -95,7 +95,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // Remove thought reaction. This method finds the thought based on ID. It then updates the reactions array associated with the thought in question by removing it's reactionId from the reactions array.
-  removeReaction(req, res) {
+  removeThoughtReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
