@@ -16,7 +16,7 @@ const userSchema = new Schema(
         validate: function(v) {
         return /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(v);
       },
-      message: props => `${props.value} is not a valid phone number!`    
+      message: props => `${props.value} is not a valid email address!`    
     },
     thoughts: [
       {
@@ -41,7 +41,7 @@ const userSchema = new Schema(
   }
 );
 
-// Create a virtual property `friendCount` that gets and sets the user's full name
+// Create a virtual property `friendCount` that gets the user's friend count
 userSchema
   .virtual('friendCount')
   // Getter

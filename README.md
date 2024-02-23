@@ -65,6 +65,8 @@ Please refere to github The MIT License license or to click the link above
 
 ## Link to the Video <a id="link-video"></a>
 
+https://drive.google.com/file/d/19JzxF-mDqmmE1F0vfd4rmZk_qDHIicfK/view
+
 ## Screenshot of the Deployed App<a id="deployed-app"></a>
 
 N/A

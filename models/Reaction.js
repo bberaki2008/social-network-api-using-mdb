@@ -31,11 +31,12 @@ const reactionSchema = new Schema(
   }
 );
 
-// Use a getter method to format the timestamp on query
-//  function createdAt (val) {
-//   if (!val) return val;
-//   return (val.getMonth() + 1) + "/" + val.getDate() + "/" + val.getFullYear();
-// }
+reactionSchema.virtual('formatedDate').get(function(){
+  if (!this.createdAt) return this.createdAt;
+  return (this.createdAt.getMonth() + 1) + "/" + this.createdAt.getDate() + "/" + this.createdAt.getFullYear();
+
+})
+
 
 module.exports = reactionSchema;
 
